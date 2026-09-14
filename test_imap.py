@@ -82,7 +82,6 @@ while True:
             print("Update error:", response.text)
     else:
         print(f"[-] {email} -> {message}")
-        print(f"[+] {email} -> {message}")
         valid = "no"
         # 3. Update account
         response = requests.get(
