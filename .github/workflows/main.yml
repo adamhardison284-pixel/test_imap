@@ -16,9 +16,9 @@ jobs:
         with:
           python-version: "3.11"
           
-      # - name: Install dependencies
-        # run: |
-          # pip install -r requests
+      - name: Install dependencies
+        run: |
+          pip install requests
 
       - name: Run script
         run: python -u test_imap.py
