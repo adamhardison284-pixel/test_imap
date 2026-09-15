@@ -45,9 +45,11 @@ def process_account(account_data):
             timeout=30
         )
         if response.status_code == 200:
-            print(f"Updated ID {account_id}:", response.json())
+            #print(f"Updated ID {account_id}:", response.json())
+            pass
         else:
-            print(f"Update error for ID {account_id}:", response.text)
+            #print(f"Update error for ID {account_id}:", response.text)
+            pass
     except Exception as e:
         print(f"Failed to update database for ID {account_id}: {e}")
 
