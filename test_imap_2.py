@@ -25,7 +25,7 @@ def process_account(account_data):
     password = account_data['password']
     headers = {}
     
-    print(f"[Thread-Job] Starting ID: {account_id} | {email}")
+    #print(f"[Thread-Job] Starting ID: {account_id} | {email}")
     
     # 1. Test IMAP connection
     ok, message = test_account(email, password)
