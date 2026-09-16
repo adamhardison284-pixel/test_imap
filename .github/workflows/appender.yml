@@ -21,4 +21,4 @@ jobs:
           pip install requests
 
       - name: Run script
-        run: python -u appender.py
+        run: python -u appender_2.py
