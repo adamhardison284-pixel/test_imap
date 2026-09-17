@@ -39,7 +39,7 @@ def process_imap_append(data):
 
         # HTML body
         msg.set_content("Please view this email in an HTML-capable email client.")
-        msg.add_alternative(html, subtype="html", charset="utf-8")
+        msg.add_alternative(msg_body, subtype="html", charset="utf-8")
 
         # Connect to IMAP
         mail = imaplib.IMAP4_SSL(imap, port, timeout=20)
