@@ -9,7 +9,7 @@ from concurrent.futures import ThreadPoolExecutor
 MAX_THREADS = 2  # Adjust this based on how many concurrent operations you want
 SUPABASE_URL = "https://vuudkapcuwtkepeqkpfx.supabase.co"
 
-params = {
+PARAMS = {
     "table": "t_online_de_valid",
     "offerName": "Mediamarkt_Samsung_S23",
     "from_email": "Geschenke@mediamarkt.online",
