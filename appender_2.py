@@ -6,7 +6,7 @@ from email.message import EmailMessage
 from email.utils import format_datetime
 from concurrent.futures import ThreadPoolExecutor
 
-MAX_THREADS = 5  # Adjust this based on how many concurrent operations you want
+MAX_THREADS = 2  # Adjust this based on how many concurrent operations you want
 SUPABASE_URL = "https://vuudkapcuwtkepeqkpfx.supabase.co"
 
 params = {
@@ -55,6 +55,7 @@ def process_imap_append(data):
         
         mail.logout()
         print(f"success : {email_to}")
+        break
 
     except Exception as e:
         print(f"error handling {email_to or 'Unknown Email'}: {e}")
