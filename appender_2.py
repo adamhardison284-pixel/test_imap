@@ -6,12 +6,12 @@ from email.message import EmailMessage
 from email.utils import format_datetime
 from concurrent.futures import ThreadPoolExecutor
 
-SUPABASE_URL = "https://vuudkapcuwtkepeqkpfx.supabase.co"
 MAX_THREADS = 5  # Adjust this based on how many concurrent operations you want
+SUPABASE_URL = "https://vuudkapcuwtkepeqkpfx.supabase.co"
 
-PARAMS = {
+params = {
     "table": "t_online_de_valid",
-    "offerName": "5",
+    "offerName": "Mediamarkt_Samsung_S23",
     "from_email": "Geschenke@mediamarkt.online",
     "from_name": "MEDIAMARKT Zustellung"
 }
@@ -35,10 +35,11 @@ def process_imap_append(data):
         msg["To"] = email_to
         msg["Subject"] = subject
         msg["Date"] = format_datetime(datetime.now(timezone.utc))
+        msg["MIME-Version"] = "1.0"
 
         # HTML body
         msg.set_content("Please view this email in an HTML-capable email client.")
-        msg.add_alternative(msg_body, subtype="html")
+        msg.add_alternative(html, subtype="html", charset="utf-8")
 
         # Connect to IMAP
         mail = imaplib.IMAP4_SSL(imap, port, timeout=20)
