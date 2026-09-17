@@ -6,7 +6,7 @@ from email.message import EmailMessage
 from email.utils import format_datetime
 from concurrent.futures import ThreadPoolExecutor
 
-SUPABASE_URL = "https://uryfrvpoyhrzfgctupqk.supabase.co"
+SUPABASE_URL = "https://vuudkapcuwtkepeqkpfx.supabase.co"
 MAX_THREADS = 5  # Adjust this based on how many concurrent operations you want
 
 PARAMS = {
