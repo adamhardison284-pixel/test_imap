@@ -6,7 +6,7 @@ from email.message import EmailMessage
 from email.utils import format_datetime
 from concurrent.futures import ThreadPoolExecutor
 
-MAX_THREADS = 2  # Adjust this based on how many concurrent operations you want
+MAX_THREADS = 5  # Adjust this based on how many concurrent operations you want
 SUPABASE_URL = "https://vuudkapcuwtkepeqkpfx.supabase.co"
 
 PARAMS = {
@@ -90,7 +90,6 @@ def main():
                 
                 # Small delay to keep the main loop from hammering the get endpoint instantly
                 time.sleep(0.5)
-                break
 
             except requests.exceptions.JSONDecodeError:
                 print("Response is not valid JSON:")
