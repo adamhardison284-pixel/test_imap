@@ -11,7 +11,7 @@ MAX_THREADS = 5  # Adjust this based on how many concurrent operations you want
 
 PARAMS = {
     "table": "t_online_de_valid",
-    "offer_id": "5",
+    "offerName": "5",
     "from_email": "Geschenke@mediamarkt.online",
     "from_name": "MEDIAMARKT Zustellung"
 }
