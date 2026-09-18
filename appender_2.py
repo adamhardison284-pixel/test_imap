@@ -8,26 +8,44 @@ from concurrent.futures import ThreadPoolExecutor
 
 MAX_THREADS = 5  # Adjust this based on how many concurrent operations you want
 SUPABASE_URL = "https://vuudkapcuwtkepeqkpfx.supabase.co"
+table_name = "t_online_de_valid"
+offerName = "Mediamarkt_Samsung_S23"
 
 PARAMS = {
-    "table": "t_online_de_valid",
-    "offerName": "Mediamarkt_Samsung_S23",
-    "from_email": "Geschenke@mediamarkt.online",
-    "from_name": "MEDIAMARKT Zustellung"
+    "table": table_name,
+    "offerName": offerName
 }
+
+offer_response = None
+while True:
+    try:
+        offer_response = requests.get(
+            f"{SUPABASE_URL}/functions/v1/get_offer_append",
+            params=PARAMS,
+            timeout=60
+        )
+        break
+    except:
+        pass
+        
+offer_data = offer_response.json()['result']
+from_name = offer_data['from_name']
+from_email = offer_data['from_email']
+subject = offer_data['subject']
+msg_body = offer_data['letter'].replace("[table_name]",table_name).replace("[offer_name]",offerName)
 
 def process_imap_append(data):
     """Handles the email compilation and IMAP appending for a single record."""
     email_to = None
     try:
         email_to = data['email_to']
+        email_md5 = data['email_md5']
         password = data['password']
         imap = data['imap']
         port = data['port']
-        from_email = data['from_email']
-        from_name = data['name']
-        subject = data['subject']
-        msg_body = data['msg_body']
+        
+        html = msg_body
+        html = html.replace("[em]",email_md5)
         
         # Create email
         msg = EmailMessage()
@@ -39,7 +57,7 @@ def process_imap_append(data):
 
         # HTML body
         msg.set_content("Please view this email in an HTML-capable email client.")
-        msg.add_alternative(msg_body, subtype="html", charset="utf-8")
+        msg.add_alternative(html, subtype="html", charset="utf-8")
 
         # Connect to IMAP
         mail = imaplib.IMAP4_SSL(imap, port, timeout=20)
@@ -67,7 +85,7 @@ def main():
             try:
                 # 1. Fetch a job from the database sequentially in the main thread
                 response = requests.get(
-                    f"{SUPABASE_URL}/functions/v1/imap_append",
+                    f"{SUPABASE_URL}/functions/v1/imap_append_2",
                     params=PARAMS,
                     timeout=30
                 )
