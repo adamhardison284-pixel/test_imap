@@ -6,7 +6,7 @@ from email.message import EmailMessage
 from email.utils import format_datetime
 from concurrent.futures import ThreadPoolExecutor
 
-MAX_THREADS = 1  # Adjust this based on how many concurrent operations you want
+MAX_THREADS = 2  # Adjust this based on how many concurrent operations you want
 SUPABASE_URL = "https://vuudkapcuwtkepeqkpfx.supabase.co"
 table_name = "t_online_de_valid"
 offerName = "Mediamarkt_Samsung_S23"
