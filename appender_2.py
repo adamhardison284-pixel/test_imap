@@ -93,6 +93,7 @@ def main():
         while True:
             response = None
             try:
+                print("Start...")
                 # 1. Fetch a job from the database sequentially in the main thread
                 response = requests.get(
                     f"{SUPABASE_URL}/functions/v1/imap_append_2",
