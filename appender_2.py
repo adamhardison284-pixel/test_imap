@@ -15,7 +15,7 @@ def random_string(length=12):
 MAX_THREADS = 5  # Adjust this based on how many concurrent operations you want
 SUPABASE_URL = "https://vuudkapcuwtkepeqkpfx.supabase.co"
 table_name = "t_online_de_valid"
-offerName = "Mediamarkt_Samsung_S23"
+offerName = "wowTv"
 
 PARAMS = {
     "table": table_name,
