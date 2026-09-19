@@ -37,45 +37,46 @@ msg_body = offer_data['letter'].replace("[table_name]",table_name).replace("[off
 def process_imap_append(data):
     """Handles the email compilation and IMAP appending for a single record."""
     email_to = None
-    try:
-        email_to = data['email_to']
-        email_md5 = data['email_md5']
-        password = data['password']
-        imap = data['imap']
-        port = data['port']
-        
-        html = msg_body
-        html = html.replace("[em]",email_md5)
-        
-        # Create email
-        msg = EmailMessage()
-        msg["From"] = f"{from_name} <{from_email}>"
-        msg["To"] = email_to
-        msg["Subject"] = subject
-        msg["Date"] = format_datetime(datetime.now(timezone.utc))
-        msg["MIME-Version"] = "1.0"
-
-        # HTML body
-        msg.set_content("Please view this email in an HTML-capable email client.")
-        msg.add_alternative(html, subtype="html", charset="utf-8")
-
-        # Connect to IMAP
-        mail = imaplib.IMAP4_SSL(imap, port, timeout=20)
-        mail.login(email_to, password)
-
-        # Append to Inbox
-        status, res_data = mail.append(
-            "INBOX",
-            None,
-            imaplib.Time2Internaldate(datetime.now(timezone.utc)),
-            msg.as_bytes()
-        )
-        
-        mail.logout()
-        print(f"success : {email_to}")
-
-    except Exception as e:
-        print(f"error handling {email_to or 'Unknown Email'}: {e}")
+    for acc in data:
+        try:
+            email_to = acc['email_to']
+            email_md5 = acc['email_md5']
+            password = acc['password']
+            imap = acc['imap']
+            port = acc['port']
+            
+            html = msg_body
+            html = html.replace("[em]",email_md5)
+            
+            # Create email
+            msg = EmailMessage()
+            msg["From"] = f"{from_name} <{from_email}>"
+            msg["To"] = email_to
+            msg["Subject"] = subject
+            msg["Date"] = format_datetime(datetime.now(timezone.utc))
+            msg["MIME-Version"] = "1.0"
+    
+            # HTML body
+            msg.set_content("Please view this email in an HTML-capable email client.")
+            msg.add_alternative(html, subtype="html", charset="utf-8")
+    
+            # Connect to IMAP
+            mail = imaplib.IMAP4_SSL(imap, port, timeout=20)
+            mail.login(email_to, password)
+    
+            # Append to Inbox
+            status, res_data = mail.append(
+                "INBOX",
+                None,
+                imaplib.Time2Internaldate(datetime.now(timezone.utc)),
+                msg.as_bytes()
+            )
+            
+            mail.logout()
+            print(f"success : {email_to}")
+    
+        except Exception as e:
+            print(f"error handling {email_to or 'Unknown Email'}: {e}")
 
 def main():
     # ThreadPoolExecutor manages worker threads efficiently
