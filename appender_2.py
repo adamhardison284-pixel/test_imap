@@ -5,7 +5,13 @@ from datetime import datetime, timezone
 from email.message import EmailMessage
 from email.utils import format_datetime
 from concurrent.futures import ThreadPoolExecutor
+import secrets
+import string
 
+def random_string(length=12):
+    chars = string.ascii_letters + string.digits
+    return ''.join(secrets.choice(chars) for _ in range(length))
+    
 MAX_THREADS = 5  # Adjust this based on how many concurrent operations you want
 SUPABASE_URL = "https://vuudkapcuwtkepeqkpfx.supabase.co"
 table_name = "t_online_de_valid"
@@ -37,7 +43,10 @@ msg_body = offer_data['letter'].replace("[table_name]",table_name).replace("[off
 def process_imap_append(data):
     """Handles the email compilation and IMAP appending for a single record."""
     email_to = None
+    cycle = random_string(5)
     for acc in data:
+        defa = cycle + " -> " + acc['email_to']
+        print(defa)
         try:
             email_to = acc['email_to']
             email_md5 = acc['email_md5']
