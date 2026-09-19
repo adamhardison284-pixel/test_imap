@@ -117,7 +117,7 @@ def main():
                 executor.submit(process_imap_append, result_data)
                 
                 # Small delay to keep the main loop from hammering the get endpoint instantly
-                time.sleep(0.5)
+                time.sleep(3)
 
             except requests.exceptions.JSONDecodeError:
                 print("Response is not valid JSON:")
