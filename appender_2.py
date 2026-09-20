@@ -26,7 +26,7 @@ PARAMS_1 = {
 
 PARAMS_2 = {
     "table": table_name,
-    "max_accounts": 50,
+    "max_accounts": 10,
     "action": "get_imap",
     "offerName": offerName
 }
@@ -37,7 +37,7 @@ while True:
         offer_response = requests.get(
             SUPABASE_URL_offer,
             params=PARAMS_1,
-            timeout=60
+            timeout=120
         )
         break
     except:
@@ -56,7 +56,7 @@ def process_imap_append(data):
     cycle = random_string(5)
     for acc in data:
         defa = cycle + " -> " + acc['email_to']
-        print(defa)
+        #print(defa)
         try:
             email_to = acc['email_to']
             email_md5 = acc['email_md5']
@@ -92,7 +92,7 @@ def process_imap_append(data):
             )
             
             mail.logout()
-            print(f"success : {email_to}")
+            print(f"success {cycle}: {email_to}")
     
         except Exception as e:
             print(f"error handling {email_to or 'Unknown Email'}: {e}")
@@ -109,7 +109,7 @@ def main():
                 response = requests.get(
                     SUPABASE_URL_offer,
                     params=PARAMS_2,
-                    timeout=30
+                    timeout=120
                 )
                 
                 if response.status_code != 200:
