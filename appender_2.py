@@ -44,7 +44,6 @@ while True:
         pass
         
 offer_data = offer_response.json()['result']
-print('letter: ', offer_data['letter'])
 from_name = offer_data['from_name']
 from_email = offer_data['from_email']
 subject = offer_data['subject']
