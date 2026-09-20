@@ -13,10 +13,11 @@ def random_string(length=12):
     return ''.join(secrets.choice(chars) for _ in range(length))
     
 MAX_THREADS = 5  # Adjust this based on how many concurrent operations you want
-SUPABASE_URL_offer = "https://vuudkapcuwtkepeqkpfx.supabase.co/functions/v1/get_offer_append"
 SUPABASE_URL_offer = "https://script.google.com/macros/s/AKfycbyYXiCRBzmMTyjUjAmD_ENVyem49meqmv_Tkdj2gb5PsoXygCwbFQBY1Pu_xuCB6a_63Q/exec"
+SUPABASE_URL_offer = "https://vuudkapcuwtkepeqkpfx.supabase.co/functions/v1/get_offer_append"
+SUPABASE_URL_imap = "https://vuudkapcuwtkepeqkpfx.supabase.co/functions/v1/get_offer_append"
 table_name = "t_online_de_valid"
-offerName = "wowTv"
+offerName = "live_jasmin"
 
 PARAMS_1 = {
     "table": table_name,
@@ -106,7 +107,7 @@ def main():
                 # 1. Fetch a job from the database sequentially in the main thread
                 
                 response = requests.get(
-                    SUPABASE_URL_offer,
+                    SUPABASE_URL_imap,
                     params=PARAMS_2,
                     timeout=120
                 )
@@ -128,7 +129,7 @@ def main():
                 executor.submit(process_imap_append, result_data)
                 
                 # Small delay to keep the main loop from hammering the get endpoint instantly
-                time.sleep(3)
+                time.sleep(5)
 
             except requests.exceptions.JSONDecodeError:
                 print("Response is not valid JSON:")
