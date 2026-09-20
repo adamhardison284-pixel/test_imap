@@ -26,6 +26,7 @@ PARAMS_1 = {
 
 PARAMS_2 = {
     "table": table_name,
+    "max_accounts": 50,
     "action": "get_imap",
     "offerName": offerName
 }
