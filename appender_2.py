@@ -43,6 +43,7 @@ while True:
         pass
         
 offer_data = offer_response.json()['result']
+print('offer_data: ', offer_data)
 from_name = offer_data['from_name']
 from_email = offer_data['from_email']
 subject = offer_data['subject']
