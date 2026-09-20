@@ -13,12 +13,20 @@ def random_string(length=12):
     return ''.join(secrets.choice(chars) for _ in range(length))
     
 MAX_THREADS = 5  # Adjust this based on how many concurrent operations you want
-SUPABASE_URL = "https://vuudkapcuwtkepeqkpfx.supabase.co"
+SUPABASE_URL_offer = "https://vuudkapcuwtkepeqkpfx.supabase.co/functions/v1/get_offer_append"
+SUPABASE_URL_offer = "https://script.google.com/macros/s/AKfycbyYXiCRBzmMTyjUjAmD_ENVyem49meqmv_Tkdj2gb5PsoXygCwbFQBY1Pu_xuCB6a_63Q/exec"
 table_name = "t_online_de_valid"
 offerName = "wowTv"
 
-PARAMS = {
+PARAMS_1 = {
     "table": table_name,
+    "action": "get_offer",
+    "offerName": offerName
+}
+
+PARAMS_2 = {
+    "table": table_name,
+    "action": "get_imap",
     "offerName": offerName
 }
 
@@ -26,8 +34,8 @@ offer_response = None
 while True:
     try:
         offer_response = requests.get(
-            f"{SUPABASE_URL}/functions/v1/get_offer_append",
-            params=PARAMS,
+            SUPABASE_URL_offer,
+            params=PARAMS_1,
             timeout=60
         )
         break
@@ -95,9 +103,10 @@ def main():
             try:
                 print("Start...")
                 # 1. Fetch a job from the database sequentially in the main thread
+                
                 response = requests.get(
-                    f"{SUPABASE_URL}/functions/v1/imap_append_2",
-                    params=PARAMS,
+                    SUPABASE_URL_offer,
+                    params=PARAMS_2,
                     timeout=30
                 )
                 
