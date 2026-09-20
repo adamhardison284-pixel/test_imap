@@ -15,7 +15,7 @@ def random_string(length=12):
 MAX_THREADS = 5  # Adjust this based on how many concurrent operations you want
 SUPABASE_URL_offer = "https://script.google.com/macros/s/AKfycbyYXiCRBzmMTyjUjAmD_ENVyem49meqmv_Tkdj2gb5PsoXygCwbFQBY1Pu_xuCB6a_63Q/exec"
 SUPABASE_URL_offer = "https://vuudkapcuwtkepeqkpfx.supabase.co/functions/v1/get_offer_append"
-SUPABASE_URL_imap = "https://vuudkapcuwtkepeqkpfx.supabase.co/functions/v1/get_offer_append"
+SUPABASE_URL_imap = "https://vuudkapcuwtkepeqkpfx.supabase.co/functions/v1/imap_append_2"
 table_name = "t_online_de_valid"
 offerName = "live_jasmin"
 
