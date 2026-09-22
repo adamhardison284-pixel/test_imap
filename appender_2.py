@@ -17,7 +17,7 @@ SUPABASE_URL_offer = "https://script.google.com/macros/s/AKfycbyYXiCRBzmMTyjUjAm
 SUPABASE_URL_offer = "https://vuudkapcuwtkepeqkpfx.supabase.co/functions/v1/get_offer_append"
 SUPABASE_URL_imap = "https://vuudkapcuwtkepeqkpfx.supabase.co/functions/v1/imap_append_2"
 table_name = "t_online_de_valid"
-offerName = "live_jasmin"
+offerName = "free_iptv_2"
 
 PARAMS_1 = {
     "table": table_name,
